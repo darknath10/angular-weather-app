@@ -19,8 +19,8 @@ import { CurrentWeatherComponent, WeatherForecastComponent } from './weather';
   ],
   selector: 'app-root',
   template: `
-    <!-- <router-outlet></router-outlet> -->
-    <div class="flex flex-row p-4">
+    <router-outlet></router-outlet>
+    <!-- <div class="flex flex-row p-4">
       <app-search-locations (locationSelected)="onLocationSelected($event)"></app-search-locations>
       <app-current-weather [location]="loc$ | async"></app-current-weather>
       <ng-container *ngIf="timezone$ | async as tz">
@@ -29,7 +29,7 @@ import { CurrentWeatherComponent, WeatherForecastComponent } from './weather';
     </div>
     <div>
       <app-weather-forecast [location]="loc$ | async"></app-weather-forecast>
-    </div>
+    </div> -->
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
