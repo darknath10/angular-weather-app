@@ -31,7 +31,13 @@ $farm-app-theme: mat.define-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($farm-app-theme);
+// @include mat.all-component-themes($farm-app-theme);
+@include mat.core-theme($farm-app-theme);
+@include mat.form-field-theme($farm-app-theme);
+@include mat.autocomplete-theme($farm-app-theme);
+@include mat.input-theme($farm-app-theme);
+@include mat.progress-bar-theme($farm-app-theme);
+@include mat.snack-bar-theme($farm-app-theme);
 
 @tailwind utilities;
 
