@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { filter, map } from 'rxjs';
 import { APP_STORE } from './app-store.token';
 import { Location, SearchLocationsInputComponent } from './location';
+import { CurrentWeatherComponent, WeatherForecastComponent } from './weather';
 
 @Component({
   standalone: true,
@@ -10,13 +12,18 @@ import { Location, SearchLocationsInputComponent } from './location';
     CommonModule,
     RouterModule,
     SearchLocationsInputComponent,
+    CurrentWeatherComponent,
+    WeatherForecastComponent,
   ],
   selector: 'app-root',
   template: `
     <!-- <router-outlet></router-outlet> -->
-    <app-search-locations (locationSelected)="onLocationSelected($event)"></app-search-locations>
+    <div class="flex flex-row p-4">
+      <app-search-locations (locationSelected)="onLocationSelected($event)"></app-search-locations>
+      <app-current-weather [location]="loc$ | async"></app-current-weather>
+    </div>
     <div>
-      <pre>{{loc$ | async | json}}</pre>
+      <app-weather-forecast [location]="loc$ | async"></app-weather-forecast>
     </div>
   `,
   styles: [],
@@ -24,7 +31,10 @@ import { Location, SearchLocationsInputComponent } from './location';
 })
 export class AppComponent {
   private readonly store = inject(APP_STORE);
-  readonly loc$ = this.store.selectedLocation$;
+  readonly loc$ = this.store.selectedLocation$.pipe(
+    filter((location): location is Location => !!location),
+    map(({ latitude, longitude, timezone }) => ({ latitude, longitude, timezone })),
+  );
 
   onLocationSelected(e: Location) {
     this.store.setSelectedLocation(e);
