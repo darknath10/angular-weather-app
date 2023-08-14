@@ -38,6 +38,9 @@ $farm-app-theme: mat.define-light-theme((
 @include mat.input-theme($farm-app-theme);
 @include mat.progress-bar-theme($farm-app-theme);
 @include mat.snack-bar-theme($farm-app-theme);
+@include mat.tooltip-theme($farm-app-theme);
+@include mat.list-theme($farm-app-theme);
+@include mat.divider-theme($farm-app-theme);
 
 @tailwind utilities;
 
