@@ -19,7 +19,7 @@ import { WEATHER_FORECAST_STORE, provideWeatherForecastStore } from './tokens';
     <ng-container *ngIf="vm$ | async as vm">
       <mat-list>
         <ng-container *ngFor="let daily of vm.forecast">
-          <mat-list-item>
+          <mat-list-item class="mb-2">
             <app-dailly-forecast-list-item [dailyForecast]="daily"></app-dailly-forecast-list-item>
           </mat-list-item>
           <mat-divider></mat-divider>

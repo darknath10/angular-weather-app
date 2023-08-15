@@ -19,7 +19,7 @@ import { WMO_CODE, mapWmoCode } from './wmo-codes-interpretation';
         display: block;
       }
       img {
-        @apply w-full h-full;
+        @apply w-full h-full bg-gray-600 rounded-full;
       }
     `
   ],

@@ -11,7 +11,7 @@ import { CURRENT_WEATHER_STORE, provideCurrentWeatherStore } from './tokens';
   template: `
     <ng-container *ngIf="vm$ | async as vm">
       <div *ngIf="vm.weather as weather" class="flex justify-center items-center">
-        <app-weather-code-img [isDay]="weather.isDay" [wmoCode]="weather.wmoCode"></app-weather-code-img>
+        <app-weather-code-img class="mr-2" [isDay]="weather.isDay" [wmoCode]="weather.wmoCode"></app-weather-code-img>
         <div class="flex flex-col">
           <b>{{weather.temperature}}°C</b>
           <div>
