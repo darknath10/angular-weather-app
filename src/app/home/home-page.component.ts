@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { filter, map, startWith } from 'rxjs';
+import { Location, SearchLocationsComponent } from '@farmapp/location';
 import { APP_STORE } from '../app-store.token';
 import { ClockComponent } from '../clock';
-import { Location, SearchLocationsInputComponent } from '../location';
 import { CurrentWeatherComponent, WeatherForecastComponent } from '../weather';
 import { UserInitialsComponent } from '../user';
 
@@ -11,7 +11,7 @@ import { UserInitialsComponent } from '../user';
   standalone: true,
   imports: [
     CommonModule,    
-    SearchLocationsInputComponent,
+    SearchLocationsComponent,
     CurrentWeatherComponent,
     WeatherForecastComponent,
     ClockComponent,
@@ -19,7 +19,7 @@ import { UserInitialsComponent } from '../user';
   ],
   template: `
     <div class="flex flex-row justify-around items-center p-2 mb-4 mat-elevation-z4">
-      <app-search-locations (locationSelected)="onLocationSelected($event)"></app-search-locations>
+      <farm-app-search-locations (locationSelected)="onLocationSelected($event)"></farm-app-search-locations>
       <app-current-weather [location]="loc$ | async"></app-current-weather>
       <ng-container *ngIf="timezone$ | async as tz">
         <app-clock [timezone]="tz"></app-clock>

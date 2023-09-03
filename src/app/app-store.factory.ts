@@ -1,5 +1,5 @@
 import { ComponentStore } from '@ngrx/component-store';
-import { Location } from './location/core/models'
+import { Location } from '@farmapp/location'
 
 export type AppState = {
   selectedLocation: Location | null;

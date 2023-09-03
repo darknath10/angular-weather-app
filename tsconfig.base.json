@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@farmapp/location": ["modules/location/public-api/src/index.ts"],
+      "@farmapp/location/core": ["modules/location/core/src/index.ts"],
+      "@farmapp/location/feat-search-locations": [
+        "modules/location/presentation/feature-search-locations/src/index.ts"
+      ],
+      "@farmapp/location/gw-search-locations": [
+        "modules/location/gateways/search-locations/src/index.ts"
+      ],
+      "@farmapp/location/presentation/providers": [
+        "modules/location/presentation/providers/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

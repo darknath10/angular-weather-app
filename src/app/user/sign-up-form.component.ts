@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
-import { Location, SearchLocationsInputComponent } from '../location';
+import { Location, SearchLocationsComponent } from '@farmapp/location';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -14,7 +14,7 @@ import { Location, SearchLocationsInputComponent } from '../location';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    SearchLocationsInputComponent,
+    SearchLocationsComponent,
   ],
   template: `
     <div class="flex">
@@ -26,7 +26,7 @@ import { Location, SearchLocationsInputComponent } from '../location';
         <mat-label>Last Name</mat-label>
         <input type="text" matInput [value]="lastName" (input)="setLastName($event)">
       </mat-form-field>
-      <app-search-locations (locationSelected)="setLocation($event)"></app-search-locations>
+      <farm-app-search-locations (locationSelected)="setLocation($event)"></farm-app-search-locations>
     </div>
     <button type="button" mat-flat-button color="primary" (click)="emitDataIfFilledIn()">Ok</button>
   `,
