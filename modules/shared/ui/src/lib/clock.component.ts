@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { interval, map } from 'rxjs';
 
 @Component({
-  selector: 'app-clock',
+  selector: 'farm-app-clock',
   standalone: true,
   imports: [CommonModule],
   template: `

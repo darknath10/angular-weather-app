@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { filter, map, startWith } from 'rxjs';
 import { Location, SearchLocationsComponent } from '@farmapp/location';
+import { ClockComponent } from '@farmapp/shared/ui';
 import { CurrentWeatherComponent, WeatherForecastComponent } from '@farmapp/weather';
 import { APP_STORE } from '../app-store.token';
-import { ClockComponent } from '../clock';
 import { UserInitialsComponent } from '../user';
 
 @Component({
@@ -22,7 +22,7 @@ import { UserInitialsComponent } from '../user';
       <farm-app-search-locations (locationSelected)="onLocationSelected($event)"></farm-app-search-locations>
       <farm-app-current-weather [location]="loc$ | async"></farm-app-current-weather>
       <ng-container *ngIf="timezone$ | async as tz">
-        <app-clock [timezone]="tz"></app-clock>
+        <farm-app-clock [timezone]="tz"></farm-app-clock>
       </ng-container>
       <app-user-initials [user]="user$ | async"></app-user-initials>
     </div>
