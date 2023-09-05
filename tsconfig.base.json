@@ -25,7 +25,18 @@
       ],
       "@farmapp/location/presentation/providers": [
         "modules/location/presentation/providers/src/index.ts"
-      ]
+      ],
+      "@farmapp/weather": ["modules/weather/public-api/src/index.ts"],
+      "@farmapp/weather/core": ["modules/weather/core/src/index.ts"],
+      "@farmapp/weather/feat-current": [
+        "modules/weather/presentation/feat-current/src/index.ts"
+      ],
+      "@farmapp/weather/feat-forecast": [
+        "modules/weather/presentation/feat-forecast/src/index.ts"
+      ],
+      "@farmapp/weather/gateways": ["modules/weather/gateways/src/index.ts"],
+      "@farmapp/weather/providers": ["modules/weather/providers/src/index.ts"],
+      "@farmapp/weather/ui": ["modules/weather/presentation/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
