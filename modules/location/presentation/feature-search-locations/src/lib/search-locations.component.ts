@@ -24,25 +24,23 @@ const MATERIAL_MODULES = [
     ...MATERIAL_MODULES,
   ],
   template: `
-    <ng-container *ngIf="vm$ | async as vm">
-      <mat-form-field>
-        <mat-label>Location</mat-label>
-        <input #queryInput
-          type="text"
-          matInput
-          [matAutocomplete]="auto"
-          (input)="triggerLocationsSearch()">
-        <mat-autocomplete #auto="matAutocomplete"
-          [displayWith]="displayFn"
-          (optionSelected)="setSelectedLocation($event.option.value)">
-          <mat-option *ngFor="let location of vm.locations"
-            [value]="location">
-            {{location.name}} - {{location.country}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-progress-bar *ngIf="vm.loading" mode="indeterminate"></mat-progress-bar>
-    </ng-container>
+    <mat-form-field>
+      <mat-label>Location</mat-label>
+      <input #queryInput
+        type="text"
+        matInput
+        [matAutocomplete]="auto"
+        (input)="triggerLocationsSearch()">
+      <mat-autocomplete #auto="matAutocomplete"
+        [displayWith]="displayFn"
+        (optionSelected)="setSelectedLocation($event.option.value)">
+        <mat-option *ngFor="let location of locations()"
+          [value]="location">
+          {{location.name}} - {{location.country}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-progress-bar *ngIf="loading()" mode="indeterminate"></mat-progress-bar>
   `,
   styles: [
     `
@@ -60,7 +58,9 @@ const MATERIAL_MODULES = [
 export class SearchLocationsComponent {
   private readonly cStore = inject(SEARCH_LOCATIONS_STORE);
   private readonly store = inject(Store);
-  readonly vm$ = this.cStore.vm$;
+
+  readonly locations = this.cStore.locations;
+  readonly loading = this.cStore.loading;
 
   @ViewChild('queryInput') private readonly queryInput!: ElementRef<HTMLInputElement>;
   

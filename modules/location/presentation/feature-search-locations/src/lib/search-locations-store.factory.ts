@@ -14,12 +14,8 @@ export const INITIAL_LOCATIONS_STATE: LocationsState = {
 };
 
 export function searchLocationsStoreFactory(store: ComponentStore<LocationsState>, searchLocationsGw: SearchLocationsGateway, snackbar: MatSnackBar) {
-  const locations$ = store.select(({ locations }) => locations);
-  const loading$ = store.select(({ loading }) => loading);
-  const vm$ = store.select({
-    locations: locations$,
-    loading: loading$,
-  });
+  const locations = store.selectSignal(({ locations }) => locations);
+  const loading = store.selectSignal(({ loading }) => loading);
 
   const setLocations = store.updater((state, locations: Location[]) => ({ ...state, locations, loading: false }));
   const setLoading = store.updater((state, loading: boolean) => ({ ...state, loading }));
@@ -40,7 +36,7 @@ export function searchLocationsStoreFactory(store: ComponentStore<LocationsState
     );
   });
 
-  return { vm$, searchLocations };
+  return { loading, locations, searchLocations };
 }
 
 export type SearchLocationsStore = ReturnType<typeof searchLocationsStoreFactory>;

@@ -22,12 +22,8 @@ export function weatherForecastStoreFactory(
   weatherForecastGw: WeatherForecastGateway,
   snackbar: MatSnackBar
 ) {
-  const forecast$ = store.select(({ forecast }) => forecast);
-  const loading$ = store.select(({ loading }) => loading);
-  const vm$ = store.select({
-    forecast: forecast$,
-    loading: loading$,
-  });
+  const forecast = store.selectSignal(({ forecast }) => forecast);
+  const loading = store.selectSignal(({ loading }) => loading);
 
   const setForecast = store.updater(
     (state, forecast: WeatherForecast | null) => ({
@@ -60,7 +56,7 @@ export function weatherForecastStoreFactory(
     }
   );
 
-  return { vm$, fetchWeatherForecast };
+  return { fetchWeatherForecast, forecast, loading };
 }
 
 export type WeatherForecastStore = ReturnType<

@@ -24,5 +24,5 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState(locationFeature),
     provideState(userFeature),
-],
+  ],
 };

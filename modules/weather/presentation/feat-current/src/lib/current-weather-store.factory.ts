@@ -22,12 +22,8 @@ export function currentWeatherStoreFactory(
   currentWeatherGw: CurrentWeatherGateway,
   snackbar: MatSnackBar
 ) {
-  const weather$ = store.select(({ weather }) => weather);
-  const loading$ = store.select(({ loading }) => loading);
-  const vm$ = store.select({
-    weather: weather$,
-    loading: loading$,
-  });
+  const weather = store.selectSignal(({ weather }) => weather);
+  const loading = store.selectSignal(({ loading }) => loading);
 
   const setWeather = store.updater((state, weather: CurrentWeather | null) => ({
     ...state,
@@ -58,7 +54,7 @@ export function currentWeatherStoreFactory(
     }
   );
 
-  return { vm$, fetchCurrentWeather };
+  return { fetchCurrentWeather, loading, weather };
 }
 
 export type CurrentWeatherStore = ReturnType<typeof currentWeatherStoreFactory>;

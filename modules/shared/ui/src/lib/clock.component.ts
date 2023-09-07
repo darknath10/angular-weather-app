@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { interval, map } from 'rxjs';
 
 @Component({
@@ -8,7 +9,7 @@ import { interval, map } from 'rxjs';
   imports: [CommonModule],
   template: `
     <div class="h-full flex items-center">
-      <span>{{now$ | async}}</span>
+      <span>{{ now() }}</span>
     </div>
   `,
   styles: [
@@ -23,7 +24,7 @@ import { interval, map } from 'rxjs';
 export class ClockComponent {
   @Input() timezone = 'UTC';
 
-  now$ = interval(1000).pipe(
+  private readonly now$ = interval(1000).pipe(
     map(() =>
       Intl.DateTimeFormat(undefined, {
         timeZone: this.timezone,
@@ -36,4 +37,6 @@ export class ClockComponent {
         second: 'numeric'
       }).format(Date.now())),
   );
+
+  readonly now = toSignal(this.now$);
 }

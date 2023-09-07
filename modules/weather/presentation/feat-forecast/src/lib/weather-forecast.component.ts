@@ -26,18 +26,16 @@ import {
     DailyForecastListItemComponent,
   ],
   template: `
-    <ng-container *ngIf="vm$ | async as vm">
-      <mat-list>
-        <ng-container *ngFor="let daily of vm.forecast">
-          <mat-list-item class="mb-2">
-            <farm-app-dailly-forecast-list-item
-              [dailyForecast]="daily"
-            ></farm-app-dailly-forecast-list-item>
-          </mat-list-item>
-          <mat-divider></mat-divider>
-        </ng-container>
-      </mat-list>
-    </ng-container>
+    <mat-list>
+      <ng-container *ngFor="let daily of forecast()">
+        <mat-list-item class="mb-2">
+          <farm-app-dailly-forecast-list-item
+            [dailyForecast]="daily"
+          ></farm-app-dailly-forecast-list-item>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,7 +43,7 @@ import {
 })
 export class WeatherForecastComponent implements OnChanges {
   private readonly store = inject(WEATHER_FORECAST_STORE);
-  readonly vm$ = this.store.vm$;
+  readonly forecast = this.store.forecast;
 
   @Input({ required: true }) location: Location | null = null;
 

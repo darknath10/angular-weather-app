@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { Location } from '../models';
 import * as LocationActions from './location.actions';
 
@@ -16,6 +16,20 @@ export const locationFeature = createFeature({
     INITIAL_STATE,
     on(LocationActions.selectLocation, (state, { location }) => ({ ...state, selectedLocation: location })),
   ),
+  extraSelectors: ({ selectSelectedLocation }) => ({
+    selectTimezone: createSelector(
+      selectSelectedLocation,
+      (location) => !location ? 'UTC' : location.timezone,
+    ),
+    selectLocationCoordinatesAndTimezone: createSelector(
+      selectSelectedLocation,
+      (location) => !location ?null : { latitude: location.latitude, longitude: location.longitude, timezone: location.timezone },
+    ),
+  }),
 });
 
-export const { selectSelectedLocation } = locationFeature;
+export const {
+  selectLocationCoordinatesAndTimezone,
+  selectSelectedLocation,
+  selectTimezone,
+} = locationFeature;

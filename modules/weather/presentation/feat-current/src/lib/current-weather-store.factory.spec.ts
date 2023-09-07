@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentStore } from '@ngrx/component-store';
-import { firstValueFrom, of } from 'rxjs';
+import { of } from 'rxjs';
 import {
   CurrentWeather,
   CurrentWeatherGateway,
@@ -39,10 +39,10 @@ describe('Current Weather Store', () => {
     );
   });
 
-  it('should update the state accordingly when the current weather was fetched', async () => {
+  it('should update the state accordingly when the current weather was fetched', () => {
     store.fetchCurrentWeather({} as Location);
-    const vm = await firstValueFrom(store.vm$);
+    const state = { loading: store.loading(), weather: store.weather() };
     const expected = { loading: false, weather: currentWeather };
-    expect(vm).toEqual(expected);
+    expect(state).toEqual(expected);
   });
 });

@@ -19,25 +19,23 @@ import {
   standalone: true,
   imports: [CommonModule, WeatherCodeImageComponent],
   template: `
-    <ng-container *ngIf="vm$ | async as vm">
-      <div
-        *ngIf="vm.weather as weather"
-        class="flex justify-center items-center"
-      >
-        <farm-app-weather-code-img
-          class="mr-2"
-          [isDay]="weather.isDay"
-          [wmoCode]="weather.wmoCode"
-        ></farm-app-weather-code-img>
-        <div class="flex flex-col">
-          <b>{{ weather.temperature }}°C</b>
-          <div>
-            <span>{{ weather.relativeHumidity }}%</span>&nbsp;
-            <span>{{ weather.precipitation }}mm</span>
-          </div>
+    <div
+      *ngIf="weather() as weather"
+      class="flex justify-center items-center"
+    >
+      <farm-app-weather-code-img
+        class="mr-2"
+        [isDay]="weather.isDay"
+        [wmoCode]="weather.wmoCode"
+      ></farm-app-weather-code-img>
+      <div class="flex flex-col">
+        <b>{{ weather.temperature }}°C</b>
+        <div>
+          <span>{{ weather.relativeHumidity }}%</span>&nbsp;
+          <span>{{ weather.precipitation }}mm</span>
         </div>
       </div>
-    </ng-container>
+    </div>
   `,
   styles: [
     `
@@ -55,7 +53,9 @@ import {
 })
 export class CurrentWeatherComponent implements OnChanges {
   private readonly store = inject(CURRENT_WEATHER_STORE);
-  readonly vm$ = this.store.vm$;
+  
+  readonly weather = this.store.weather;
+  readonly loading = this.store.loading;
 
   @Input() location: Location | null = null;
 

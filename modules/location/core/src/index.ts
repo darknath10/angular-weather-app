@@ -1,4 +1,10 @@
-import { LocationActions, locationFeature, selectSelectedLocation } from './lib/+state';
+import {
+  LocationActions,
+  locationFeature,
+  selectLocationCoordinatesAndTimezone,
+  selectSelectedLocation,
+  selectTimezone,
+} from './lib/+state';
 import { SEARCH_LOCATIONS_GATEWAY, SearchLocationsGateway } from './lib/gateways';
 import { Location } from './lib/models';
 
@@ -8,5 +14,7 @@ export {
   SEARCH_LOCATIONS_GATEWAY,
   SearchLocationsGateway,
   locationFeature,
+  selectLocationCoordinatesAndTimezone,
   selectSelectedLocation,
+  selectTimezone,
 };

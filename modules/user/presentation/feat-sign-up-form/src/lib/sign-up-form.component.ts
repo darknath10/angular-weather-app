@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,11 +22,11 @@ import { UserActions } from '@farmapp/user/core';
     <div class="flex">
       <mat-form-field class="mr-10">
         <mat-label>First Name</mat-label>
-        <input type="text" matInput [value]="firstName" (input)="setFirstName($event)">
+        <input type="text" matInput [value]="firstName()" (input)="setFirstName($event)">
       </mat-form-field>
       <mat-form-field class="mr-10">
         <mat-label>Last Name</mat-label>
-        <input type="text" matInput [value]="lastName" (input)="setLastName($event)">
+        <input type="text" matInput [value]="lastName()" (input)="setLastName($event)">
       </mat-form-field>
       <farm-app-search-locations (locationSelected)="setLocation($event)"></farm-app-search-locations>
     </div>
@@ -39,30 +39,32 @@ export class SignUpFormComponent {
   private readonly snackbar = inject(MatSnackBar);
   private readonly store = inject(Store);
 
-  firstName: string | null = null;
-  lastName: string | null = null;
-  location: Location | null = null;
+  firstName = signal<string>('');
+  lastName = signal<string>('');
+  location = signal<Location | null>(null);
+
+  private readonly isValid = computed(() => !!this.firstName() && !!this.lastName() && !!this.location());
 
   @Output() userSubmit = new EventEmitter<void>();
 
   setFirstName(e: Event) {
-    this.firstName = (e.target as HTMLInputElement).value;
+    this.firstName.set((e.target as HTMLInputElement).value);
   }
 
   setLastName(e: Event) {
-    this.lastName = (e.target as HTMLInputElement).value;
+    this.lastName.set((e.target as HTMLInputElement).value);
   }
 
   setLocation(location: Location) {
-    this.location = location;
+    this.location.set(location);
   }
 
   emitDataIfFilledIn() {
-    if (!this.firstName || !this.lastName || !this.location) {
+    if (!this.isValid()) {
       this.snackbar.open('Please set your name & location', 'Dismiss');
       return;
     }
-    const user = { firstName: this.firstName, lastName: this.lastName };
+    const user = { firstName: this.firstName(), lastName: this.lastName() };
     this.store.dispatch(UserActions.setUser({ user }));
     this.userSubmit.emit();
   }
