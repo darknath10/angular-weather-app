@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgFor } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,7 +20,7 @@ import {
   selector: 'farm-app-weather-forecast',
   standalone: true,
   imports: [
-    CommonModule,
+    NgFor,
     MatDividerModule,
     MatListModule,
     DailyForecastListItemComponent,

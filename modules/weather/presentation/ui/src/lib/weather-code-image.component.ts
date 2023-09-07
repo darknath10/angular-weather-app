@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,7 +10,7 @@ import { WMO_CODE, mapWmoCode } from './wmo-codes-interpretation';
 @Component({
   selector: 'farm-app-weather-code-img',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule],
+  imports: [MatTooltipModule],
   template: `
     <img
       [src]="wmoCodeImgUrl"

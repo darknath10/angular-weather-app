@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserInitialsPipe } from './user-initials.pipe';
 
@@ -7,7 +7,7 @@ import { UserInitialsPipe } from './user-initials.pipe';
   selector: 'farm-app-user-initials',
   standalone: true,
   imports: [
-    CommonModule,
+    NgIf,
     MatTooltipModule,
     UserInitialsPipe,
   ],

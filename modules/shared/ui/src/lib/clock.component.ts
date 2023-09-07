@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { interval, map } from 'rxjs';
@@ -6,7 +5,6 @@ import { interval, map } from 'rxjs';
 @Component({
   selector: 'farm-app-clock',
   standalone: true,
-  imports: [CommonModule],
   template: `
     <div class="h-full flex items-center">
       <span>{{ now() }}</span>

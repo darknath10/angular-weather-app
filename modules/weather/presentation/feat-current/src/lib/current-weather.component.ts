@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,7 +17,7 @@ import {
 @Component({
   selector: 'farm-app-current-weather',
   standalone: true,
-  imports: [CommonModule, WeatherCodeImageComponent],
+  imports: [NgIf, WeatherCodeImageComponent],
   template: `
     <div
       *ngIf="weather() as weather"

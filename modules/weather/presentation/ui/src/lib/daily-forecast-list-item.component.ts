@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { WeatherForecast } from '@farmapp/weather/core';
@@ -9,7 +9,7 @@ type DailyForecast = WeatherForecast[number];
 @Component({
   selector: 'farm-app-dailly-forecast-list-item',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, WeatherCodeImageComponent],
+  imports: [DatePipe, NgIf, MatTooltipModule, WeatherCodeImageComponent],
   template: `
     <ng-container *ngIf="dailyForecast; else nodata">
       <div class="flex items-center w-full">

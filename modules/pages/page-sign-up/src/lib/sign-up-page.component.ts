@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
@@ -7,7 +6,6 @@ import { SignUpFormComponent } from '@farmapp/user';
 @Component({
   standalone: true,
   imports: [
-    CommonModule,
     MatCardModule,
     SignUpFormComponent,
   ],

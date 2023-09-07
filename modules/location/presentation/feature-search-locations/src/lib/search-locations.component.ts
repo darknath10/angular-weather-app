@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +20,8 @@ const MATERIAL_MODULES = [
   selector: 'farm-app-search-locations',
   standalone: true,
   imports: [
-    CommonModule,
+    NgFor,
+    NgIf,
     ...MATERIAL_MODULES,
   ],
   template: `

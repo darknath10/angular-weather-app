@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { SearchLocationsComponent, selectLocationCoordinatesAndTimezone, selectTimezone } from '@farmapp/location';
@@ -9,7 +8,6 @@ import { CurrentWeatherComponent, WeatherForecastComponent } from '@farmapp/weat
 @Component({
   standalone: true,
   imports: [
-    CommonModule,    
     SearchLocationsComponent,
     CurrentWeatherComponent,
     WeatherForecastComponent,
