@@ -4,9 +4,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { Location } from '@farmapp/location/core';
+import { Location, LocationActions } from '@farmapp/location/core';
 import { provideSearchLocationsGateway } from '@farmapp/location/presentation/providers';
 import { SEARCH_LOCATIONS_STORE, provideSearchLocationsStore } from './search-locations-store.token';
+import { Store } from '@ngrx/store';
 
 const MATERIAL_MODULES = [
   MatAutocompleteModule,
@@ -33,7 +34,7 @@ const MATERIAL_MODULES = [
           (input)="triggerLocationsSearch()">
         <mat-autocomplete #auto="matAutocomplete"
           [displayWith]="displayFn"
-          (optionSelected)="locationSelected.emit($event.option.value)">
+          (optionSelected)="setSelectedLocation($event.option.value)">
           <mat-option *ngFor="let location of vm.locations"
             [value]="location">
             {{location.name}} - {{location.country}}
@@ -57,8 +58,9 @@ const MATERIAL_MODULES = [
   ],
 })
 export class SearchLocationsComponent {
-  private readonly store = inject(SEARCH_LOCATIONS_STORE);
-  readonly vm$ = this.store.vm$;
+  private readonly cStore = inject(SEARCH_LOCATIONS_STORE);
+  private readonly store = inject(Store);
+  readonly vm$ = this.cStore.vm$;
 
   @ViewChild('queryInput') private readonly queryInput!: ElementRef<HTMLInputElement>;
   
@@ -71,6 +73,11 @@ export class SearchLocationsComponent {
   triggerLocationsSearch() {
     const { value } = this.queryInput.nativeElement;
     if (!value.length) return;
-    this.store.searchLocations(value);
+    this.cStore.searchLocations(value);
+  }
+
+  setSelectedLocation(location: Location) {
+    this.store.dispatch(LocationActions.selectLocation({ location }));
+    this.locationSelected.emit(location);
   }
 }

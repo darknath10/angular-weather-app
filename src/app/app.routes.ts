@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
-import { SignUpPageComponent } from './user';
-import { HomePageComponent } from './home';
-import { userGuard } from './user.guard';
+import { HomePageComponent } from '@farmapp/pages/home';
+import { SignUpPageComponent } from '@farmapp/pages/sign-up';
+import { userGuard } from '@farmapp/shared/guards';
 
 export const appRoutes: Route[] = [
   {
