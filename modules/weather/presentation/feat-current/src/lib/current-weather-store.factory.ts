@@ -1,6 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { Observable, switchMap, tap } from 'rxjs';
+import { Nullable } from '@farmapp/shared/types';
 import {
   CurrentWeather,
   CurrentWeatherGateway,
@@ -8,7 +9,7 @@ import {
 } from '@farmapp/weather/core';
 
 export type CurrentWeatherState = {
-  weather: CurrentWeather | null;
+  weather: Nullable<CurrentWeather>;
   loading: boolean;
 };
 
@@ -25,7 +26,7 @@ export function currentWeatherStoreFactory(
   const weather = store.selectSignal(({ weather }) => weather);
   const loading = store.selectSignal(({ loading }) => loading);
 
-  const setWeather = store.updater((state, weather: CurrentWeather | null) => ({
+  const setWeather = store.updater((state, weather: Nullable<CurrentWeather>) => ({
     ...state,
     weather,
     loading: false,

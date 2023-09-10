@@ -1,9 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { Nullable } from '@farmapp/shared/types';
 import { User } from '../models';
 import * as UserActions from './user.actions';
 
 type UserState = {
-  user: User | null;
+  user: Nullable<User>;
 };
 
 const INITIAL_STATE: UserState = {

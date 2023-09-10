@@ -1,6 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { Observable, switchMap, tap } from 'rxjs';
+import { Nullable } from '@farmapp/shared/types';
 import {
   Location,
   WeatherForecast,
@@ -8,7 +9,7 @@ import {
 } from '@farmapp/weather/core';
 
 export type WeatherForecastState = {
-  forecast: WeatherForecast | null;
+  forecast: Nullable<WeatherForecast>;
   loading: boolean;
 };
 
@@ -26,7 +27,7 @@ export function weatherForecastStoreFactory(
   const loading = store.selectSignal(({ loading }) => loading);
 
   const setForecast = store.updater(
-    (state, forecast: WeatherForecast | null) => ({
+    (state, forecast: Nullable<WeatherForecast>) => ({
       ...state,
       forecast,
       loading: false,

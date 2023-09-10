@@ -6,6 +6,7 @@ import {
   OnChanges,
   inject,
 } from '@angular/core';
+import { Nullable } from '@farmapp/shared/types';
 import { Location } from '@farmapp/weather/core';
 import { provideCurrentWeatherGateway } from '@farmapp/weather/providers';
 import { WeatherCodeImageComponent } from '@farmapp/weather/ui';
@@ -57,7 +58,7 @@ export class CurrentWeatherComponent implements OnChanges {
   readonly weather = this.store.weather;
   readonly loading = this.store.loading;
 
-  @Input() location: Location | null = null;
+  @Input() location: Nullable<Location> = null;
 
   ngOnChanges(): void {
     if (!this.location) return;

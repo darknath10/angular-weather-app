@@ -29,6 +29,7 @@
       "@farmapp/pages/home": ["modules/pages/page-home/src/index.ts"],
       "@farmapp/pages/sign-up": ["modules/pages/page-sign-up/src/index.ts"],
       "@farmapp/shared/guards": ["modules/shared/guards/src/index.ts"],
+      "@farmapp/shared/types": ["modules/shared/types/src/index.ts"],
       "@farmapp/shared/ui": ["modules/shared/ui/src/index.ts"],
       "@farmapp/user": ["modules/user/public-api/src/index.ts"],
       "@farmapp/user/core": ["modules/user/core/src/index.ts"],

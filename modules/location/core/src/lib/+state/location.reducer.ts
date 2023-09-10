@@ -1,9 +1,10 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
+import { Nullable } from '@farmapp/shared/types';
 import { Location } from '../models';
 import * as LocationActions from './location.actions';
 
 type LocationState = {
-  selectedLocation: Location | null;
+  selectedLocation: Nullable<Location>;
 };
 
 const INITIAL_STATE: LocationState = {

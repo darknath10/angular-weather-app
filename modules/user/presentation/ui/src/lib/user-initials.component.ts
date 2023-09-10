@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Nullable } from '@farmapp/shared/types';
+import { User } from '@farmapp/user/core';
 import { UserInitialsPipe } from './user-initials.pipe';
 
 @Component({
@@ -26,5 +28,5 @@ import { UserInitialsPipe } from './user-initials.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserInitialsComponent {
-  @Input({ required: true }) user: { firstName: string, lastName: string} | null = null;
+  @Input({ required: true }) user: Nullable<User> = null;
 }

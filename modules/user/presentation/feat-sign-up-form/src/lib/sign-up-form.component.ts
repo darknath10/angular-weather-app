@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { Location, SearchLocationsComponent } from '@farmapp/location';
 import { Store } from '@ngrx/store';
+import { Nullable } from '@farmapp/shared/types';
 import { UserActions } from '@farmapp/user/core';
 
 @Component({
@@ -39,7 +40,7 @@ export class SignUpFormComponent {
 
   firstName = signal<string>('');
   lastName = signal<string>('');
-  location = signal<Location | null>(null);
+  location = signal<Nullable<Location>>(null);
 
   private readonly isValid = computed(() => !!this.firstName() && !!this.lastName() && !!this.location());
 

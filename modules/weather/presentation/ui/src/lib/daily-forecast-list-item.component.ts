@@ -1,6 +1,7 @@
 import { DatePipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Nullable } from '@farmapp/shared/types';
 import { WeatherForecast } from '@farmapp/weather/core';
 import { WeatherCodeImageComponent } from './weather-code-image.component';
 
@@ -48,5 +49,5 @@ type DailyForecast = WeatherForecast[number];
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DailyForecastListItemComponent {
-  @Input({ required: true }) dailyForecast: DailyForecast | null = null;
+  @Input({ required: true }) dailyForecast: Nullable<DailyForecast> = null;
 }

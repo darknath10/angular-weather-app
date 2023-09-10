@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { Nullable } from '@farmapp/shared/types';
 import { Location } from '@farmapp/weather/core';
 import { provideWeatherForecastGateway } from '@farmapp/weather/providers';
 import { DailyForecastListItemComponent } from '@farmapp/weather/ui';
@@ -45,7 +46,7 @@ export class WeatherForecastComponent implements OnChanges {
   private readonly store = inject(WEATHER_FORECAST_STORE);
   readonly forecast = this.store.forecast;
 
-  @Input({ required: true }) location: Location | null = null;
+  @Input({ required: true }) location: Nullable<Location> = null;
 
   ngOnChanges() {
     if (!this.location) return;
