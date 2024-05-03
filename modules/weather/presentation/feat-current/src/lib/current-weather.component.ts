@@ -1,10 +1,9 @@
-import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
+  effect,
   inject,
+  input,
 } from '@angular/core';
 import { Nullable } from '@farmapp/shared/types';
 import { Location } from '@farmapp/weather/core';
@@ -18,25 +17,24 @@ import {
 @Component({
   selector: 'farm-app-current-weather',
   standalone: true,
-  imports: [NgIf, WeatherCodeImageComponent],
+  imports: [WeatherCodeImageComponent],
   template: `
-    <div
-      *ngIf="weather() as weather"
-      class="flex justify-center items-center"
-    >
-      <farm-app-weather-code-img
-        class="mr-2"
-        [isDay]="weather.isDay"
-        [wmoCode]="weather.wmoCode"
-      ></farm-app-weather-code-img>
-      <div class="flex flex-col">
-        <b>{{ weather.temperature }}°C</b>
-        <div>
-          <span>{{ weather.relativeHumidity }}%</span>&nbsp;
-          <span>{{ weather.precipitation }}mm</span>
+    @if (weather(); as weather) {
+      <div class="flex justify-center items-center">
+        <farm-app-weather-code-img
+          class="mr-2"
+          [isDay]="weather.isDay"
+          [wmoCode]="weather.wmoCode"
+        />
+        <div class="flex flex-col">
+          <b>{{ weather.temperature }}°C</b>
+          <div>
+            <span>{{ weather.relativeHumidity }}%</span>&nbsp;
+            <span>{{ weather.precipitation }}mm</span>
+          </div>
         </div>
       </div>
-    </div>
+    }
   `,
   styles: [
     `
@@ -52,16 +50,16 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideCurrentWeatherGateway(), provideCurrentWeatherStore()],
 })
-export class CurrentWeatherComponent implements OnChanges {
+export class CurrentWeatherComponent {
   private readonly store = inject(CURRENT_WEATHER_STORE);
   
   readonly weather = this.store.weather;
   readonly loading = this.store.loading;
 
-  @Input() location: Nullable<Location> = null;
-
-  ngOnChanges(): void {
-    if (!this.location) return;
-    this.store.fetchCurrentWeather(this.location);
-  }
+  readonly location = input<Nullable<Location>>(null);
+  private readonly locationEffect = effect(() => {
+    const location = this.location();
+    if (!location) { return; }
+    this.store.fetchCurrentWeather(location);
+  }, {allowSignalWrites: true}); //TODO: check if still necessary when moving to signal store
 }

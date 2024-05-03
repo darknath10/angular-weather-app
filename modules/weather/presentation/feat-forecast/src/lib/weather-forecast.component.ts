@@ -1,13 +1,12 @@
-import { NgFor } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
+  effect,
   inject,
+  input,
 } from '@angular/core';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
+import { MatDivider } from '@angular/material/divider';
+import { MatList, MatListItem } from '@angular/material/list';
 import { Nullable } from '@farmapp/shared/types';
 import { Location } from '@farmapp/weather/core';
 import { provideWeatherForecastGateway } from '@farmapp/weather/providers';
@@ -21,35 +20,33 @@ import {
   selector: 'farm-app-weather-forecast',
   standalone: true,
   imports: [
-    NgFor,
-    MatDividerModule,
-    MatListModule,
+    MatDivider,
+    MatList,
+    MatListItem,
     DailyForecastListItemComponent,
   ],
   template: `
     <mat-list>
-      <ng-container *ngFor="let daily of forecast()">
+      @for (daily of forecast(); track $index) {
         <mat-list-item class="mb-2">
-          <farm-app-dailly-forecast-list-item
-            [dailyForecast]="daily"
-          ></farm-app-dailly-forecast-list-item>
+          <farm-app-dailly-forecast-list-item [dailyForecast]="daily"/>
         </mat-list-item>
-        <mat-divider></mat-divider>
-      </ng-container>
+        <mat-divider/>
+      }
     </mat-list>
   `,
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideWeatherForecastGateway(), provideWeatherForecastStore()],
 })
-export class WeatherForecastComponent implements OnChanges {
+export class WeatherForecastComponent {
   private readonly store = inject(WEATHER_FORECAST_STORE);
   readonly forecast = this.store.forecast;
 
-  @Input({ required: true }) location: Nullable<Location> = null;
-
-  ngOnChanges() {
-    if (!this.location) return;
-    this.store.fetchWeatherForecast(this.location);
-  }
+  readonly location = input.required<Nullable<Location>>();
+  private readonly locationEffect = effect(() => {
+    const location = this.location();
+    if (!location) { return; }
+    this.store.fetchWeatherForecast(location);
+  }, {allowSignalWrites: true}); // TODO: check if still necessary after changing to signal store
 }

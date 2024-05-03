@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { ChangeDetectionStrategy, Component, computed, inject, output, signal } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatInputModule } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
 import { Location, SearchLocationsComponent } from '@farmapp/location';
 import { Store } from '@ngrx/store';
 import { Nullable } from '@farmapp/shared/types';
@@ -12,9 +12,10 @@ import { UserActions } from '@farmapp/user/core';
   selector: 'farm-app-sign-up-form',
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
+    MatButton,
+    MatFormField,
+    MatLabel,
+    MatInput,
     SearchLocationsComponent,
   ],
   template: `
@@ -44,7 +45,7 @@ export class SignUpFormComponent {
 
   private readonly isValid = computed(() => !!this.firstName() && !!this.lastName() && !!this.location());
 
-  @Output() userSubmit = new EventEmitter<void>();
+  readonly userSubmit = output<void>();
 
   setFirstName(e: Event) {
     this.firstName.set((e.target as HTMLInputElement).value);

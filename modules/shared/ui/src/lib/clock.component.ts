@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { interval, map } from 'rxjs';
 
@@ -20,12 +20,12 @@ import { interval, map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClockComponent {
-  @Input() timezone = 'UTC';
+  timezone = input('UTC');
 
   private readonly now$ = interval(1000).pipe(
     map(() =>
       Intl.DateTimeFormat(undefined, {
-        timeZone: this.timezone,
+        timeZone: this.timezone(),
         weekday: 'short',
         day: 'numeric',
         month: 'short',

@@ -16,13 +16,15 @@ import { CurrentWeatherComponent, WeatherForecastComponent } from '@farmapp/weat
   ],
   template: `
     <div class="flex flex-row justify-around items-center p-2 mb-4 mat-elevation-z4">
-      <farm-app-search-locations></farm-app-search-locations>
-      <farm-app-current-weather [location]="location()"></farm-app-current-weather>
-      <farm-app-clock [timezone]="timezone()"></farm-app-clock>
-      <farm-app-user-initials [user]="user()"></farm-app-user-initials>
+      <farm-app-search-locations/>
+      <farm-app-current-weather [location]="location()"/>
+      <farm-app-clock [timezone]="timezone()"/>
+      @if (user(); as user) {
+        <farm-app-user-initials [user]="user"/>
+      }
     </div>
     <div class="p-14">
-      <farm-app-weather-forecast [location]="location()"></farm-app-weather-forecast>
+      <farm-app-weather-forecast [location]="location()"/>
     </div>
   `,
   styles: [],

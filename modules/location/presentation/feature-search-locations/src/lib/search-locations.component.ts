@@ -1,28 +1,24 @@
-import { NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild, inject } from '@angular/core';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, output, viewChild } from '@angular/core';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { Store } from '@ngrx/store';
 import { Location, LocationActions } from '@farmapp/location/core';
 import { provideSearchLocationsGateway } from '@farmapp/location/presentation/providers';
 import { SEARCH_LOCATIONS_STORE, provideSearchLocationsStore } from './search-locations-store.token';
-import { Store } from '@ngrx/store';
-
-const MATERIAL_MODULES = [
-  MatAutocompleteModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatProgressBarModule,
-];
 
 @Component({
   selector: 'farm-app-search-locations',
   standalone: true,
   imports: [
-    NgFor,
-    NgIf,
-    ...MATERIAL_MODULES,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    MatInput,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    MatProgressBar,
   ],
   template: `
     <mat-form-field>
@@ -35,13 +31,16 @@ const MATERIAL_MODULES = [
       <mat-autocomplete #auto="matAutocomplete"
         [displayWith]="displayFn"
         (optionSelected)="setSelectedLocation($event.option.value)">
-        <mat-option *ngFor="let location of locations()"
-          [value]="location">
-          {{location.name}} - {{location.country}}
-        </mat-option>
+        @for (location of locations(); track $index) {
+          <mat-option [value]="location">
+            {{location.name}} - {{location.country}}
+          </mat-option>
+        }
       </mat-autocomplete>
     </mat-form-field>
-    <mat-progress-bar *ngIf="loading()" mode="indeterminate"></mat-progress-bar>
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
   `,
   styles: [
     `
@@ -63,16 +62,16 @@ export class SearchLocationsComponent {
   readonly locations = this.cStore.locations;
   readonly loading = this.cStore.loading;
 
-  @ViewChild('queryInput') private readonly queryInput!: ElementRef<HTMLInputElement>;
+  private readonly queryInput = viewChild.required<ElementRef<HTMLInputElement>>('queryInput');
   
-  @Output() readonly locationSelected = new EventEmitter<Location>();
+  readonly locationSelected = output<Location>();
 
   displayFn({ country, name }: Location) {
     return `${name} - ${country}`;
   }
 
   triggerLocationsSearch() {
-    const { value } = this.queryInput.nativeElement;
+    const { value } = this.queryInput().nativeElement;
     if (!value.length) return;
     this.cStore.searchLocations(value);
   }

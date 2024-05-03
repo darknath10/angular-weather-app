@@ -1,21 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  OnChanges,
+  computed,
+  input,
 } from '@angular/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltip } from '@angular/material/tooltip';
 import { WMO_CODE, mapWmoCode } from './wmo-codes-interpretation';
 
 @Component({
   selector: 'farm-app-weather-code-img',
   standalone: true,
-  imports: [MatTooltipModule],
+  imports: [MatTooltip],
   template: `
     <img
-      [src]="wmoCodeImgUrl"
-      [alt]="wmoCodeDescription"
-      [matTooltip]="wmoCodeDescription"
+      [src]="mappedWmoCode().image"
+      [alt]="mappedWmoCode().description"
+      [matTooltip]="mappedWmoCode().description"
     />
   `,
   styles: [
@@ -30,18 +30,8 @@ import { WMO_CODE, mapWmoCode } from './wmo-codes-interpretation';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WeatherCodeImageComponent implements OnChanges {
-  @Input({ required: true }) wmoCode!: number;
-  @Input() isDay = true;
-  wmoCodeImgUrl!: string;
-  wmoCodeDescription!: string;
-
-  ngOnChanges(): void {
-    const { description, image } = mapWmoCode(
-      this.wmoCode as WMO_CODE,
-      this.isDay
-    );
-    this.wmoCodeDescription = description;
-    this.wmoCodeImgUrl = image;
-  }
+export class WeatherCodeImageComponent {
+  readonly wmoCode = input.required<number>();
+  readonly isDay = input(true);
+  readonly mappedWmoCode = computed(() => mapWmoCode(this.wmoCode() as WMO_CODE, this.isDay()));
 }
