@@ -1,5 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ComponentStore, tapResponse } from '@ngrx/component-store';
+import { ComponentStore } from '@ngrx/component-store';
+import { tapResponse } from '@ngrx/operators';
 import { Observable, switchMap, tap } from 'rxjs';
 import { Nullable } from '@farmapp/shared/types';
 import {
